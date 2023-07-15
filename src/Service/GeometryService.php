@@ -12,17 +12,7 @@ class GeometryService
     {
     }
 
-    public function sumSurfaceTwo(Shape $a, Shape $b): float
-    {
-        return $this->sumSurface([$a, $b]);
-    }
-    
-    public function sumCircumferenceTwo(Shape $a, Shape $b): float
-    {
-        return $this->sumCircumference([$a, $b]);
-    }
-
-    public function sumSurface(array $shapes): float
+    public function sumSurface(Shape ...$shapes): float
     {
         $sum = 0;
         foreach ($shapes as $shape) {
@@ -31,7 +21,7 @@ class GeometryService
         return $sum;
     }
 
-    public function sumCircumference(array $shapes) : float 
+    public function sumCircumference(Shape ...$shapes) : float 
     {
         $sum = 0;
         foreach ($shapes as $shape) {

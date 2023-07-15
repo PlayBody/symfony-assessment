@@ -1,9 +1,11 @@
 <?php
 namespace App\Controller;
 
+use Exception;
 use App\Model\Circle;
 use App\Model\Triangle;
 use App\Service\GeometryService;
+use App\Service\ValidateService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,21 +20,31 @@ class GeometryController extends AbstractController
     }
 
     #[Route('/circle/{radius}', methods: ['GET'])]
-    public function circle(float $radius): JsonResponse
+    public function circle(mixed $radius): JsonResponse
     {
-        $shape = new Circle($radius);
-        return $this->json(
-            $shape->calculate(),
-        );
+        try{
+            [$radius] = ValidateService::tryValidGeometryValues($radius);
+            $shape = new Circle($radius);
+            return $this->json(
+                $shape->calculate(),
+            );
+        } catch (Exception $e){
+            return $this->json($e->getMessage(), 400);
+        }
     }
 
-    #[Route('/triangle/{a}/{b}/{c}', methods: ['GET'])]
+    #[Route('/triangle/{a}/{b}/{c}', methods: ['GET'])]    
     public function triangle(float $a, float $b, float $c): JsonResponse
     {
-        $shape = new Triangle($a, $b, $c);
-        return $this->json(
-            $shape->calculate(),
-        );
+        try{
+            [$a, $b, $c] = ValidateService::tryValidGeometryValues($a, $b, $c);
+            $shape = new Triangle($a, $b, $c);
+            return $this->json(
+                $shape->calculate(),
+            );
+        } catch (Exception $e){
+            return $this->json($e->getMessage(), 400);
+        }
     }
 
     #[Route('/{any}', requirements: ['any' => '.*'])]

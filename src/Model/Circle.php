@@ -12,24 +12,32 @@ class Circle extends Shape
         $this->radius = $radius;
     }
 
-    public function basicParams(): array
+    public function isValid(): bool
     {
-        return [
-            "radius" => $this->radius,
-        ];
+        if($this->radius <= 0){
+            return false;
+        }
+        return true;
     }
 
     public function getRadius(): float
     {
         return $this->radius;
     }
+    
+    protected function _basicParams_(): array
+    {
+        return [
+            "radius" => $this->radius,
+        ];
+    }
 
-    public function calculateSurface(): float
+    protected function _calculateSurface_(): float
     {
         return pi() * pow($this->radius, 2);
     }
 
-    public function calculateCircumference(): float
+    protected function _calculateCircumference_(): float
     {
         return pi() * $this->radius * 2;
     }

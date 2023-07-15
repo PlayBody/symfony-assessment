@@ -16,13 +16,15 @@ class Triangle extends Shape
         $this->c = $c;
     }
 
-    public function basicParams(): array
+    public function isValid(): bool
     {
-        return [
-            "a" => $this->a,
-            "b" => $this->b,
-            "c" => $this->c,
-        ];
+        if($this->a <= 0 || $this->b <= 0 || $this->c <= 0){
+            return false;
+        }
+        if($this->a + $this->b <= $this->c || $this->a + $this->c <= $this->b || $this->b + $this->c <= $this->a){
+            return false;
+        }
+        return true;
     }
 
     public function getA(): float
@@ -39,14 +41,23 @@ class Triangle extends Shape
     {
         return $this->c;
     }
+    
+    protected function _basicParams_(): array
+    {
+        return [
+            "a" => $this->a,
+            "b" => $this->b,
+            "c" => $this->c,
+        ];
+    }
 
-    public function calculateSurface(): float
+    protected function _calculateSurface_(): float
     {
         $s = ($this->a + $this->b + $this->c) / 2;
         return sqrt($s * ($s - $this->a) * ($s - $this->b) * ($s - $this->c));
     }
 
-    public function calculateCircumference(): float
+    protected function _calculateCircumference_(): float
     {
         return $this->a + $this->b + $this->c;
     }

@@ -11,9 +11,39 @@ abstract class Shape
         $this->type = $type;
     }
 
-    abstract public function calculateSurface(): float;
-    abstract public function calculateCircumference(): float;
-    abstract public function basicParams(): array;
+    abstract public function isValid(): bool;
+    
+    abstract protected function _calculateSurface_(): float;
+    abstract protected function _calculateCircumference_(): float;
+    abstract protected function _basicParams_(): array;
+
+    public function basicParams(): array
+    {
+        $result = $this->_basicParams_();
+        if($this->isValid()){
+            return $result;
+        } else {
+            return [
+                "invalid" => $result, 
+            ];
+        }
+    }
+    
+    public function calculateSurface(): float
+    {
+        if(!$this->isValid()){
+            return -1;
+        }
+        return $this->_calculateSurface_();
+    }
+
+    public function calculateCircumference(): float
+    {
+        if(!$this->isValid()){
+            return -1;
+        }
+        return $this->_calculateCircumference_();
+    }
 
     public function getType(): string
     {
