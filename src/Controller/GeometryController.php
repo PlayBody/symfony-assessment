@@ -51,6 +51,6 @@ class GeometryController extends AbstractController
     public function notFoundAction(Request $request): Response
     {
         $msg = "<br>I am Manric Vilegas. <br> Please read Readme.md file. <br> Please notify me if there are any other assessments associated with this URL.";
-        return new Response('<h1>Route Not Found : '. $request->getUri()."<br>".$msg."</h1>", 400);
+        return new Response('<h1>Route Not Found : '. $request->getUri()."<br>".$msg."</h1>", 404);
     }
 }

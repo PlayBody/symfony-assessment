@@ -12,7 +12,7 @@ abstract class Shape
     }
 
     abstract public function isValid(): bool;
-    
+
     abstract protected function _calculateSurface_(): float;
     abstract protected function _calculateCircumference_(): float;
     abstract protected function _basicParams_(): array;
